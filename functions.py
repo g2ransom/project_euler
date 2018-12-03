@@ -1,9 +1,7 @@
-import sys
-
 '''
 Solutions to Project Euler problems. You can call each function via command line by using
 
-'python -c 'import functions; print functions.p001(3, 5, 1000)'' 
+'python -c 'import functions; print functions.function_name(3, 5, 1000)'' 
 '''
 
 def p001(x1, x2, max_val):
@@ -34,3 +32,25 @@ def p001(x1, x2, max_val):
 			mult2 = 0
 		total = total + mult2
 	return total
+
+
+def fibonacci(max_val):
+	fibs = [1, 2]
+	while fibs[-1] < max_val:
+		x = fibs[-1] + fibs[-2]
+		if x < max_val:
+			fibs.append(x)
+		else:
+			return fibs
+
+
+def p002(max_val):
+	'''
+	By considering the terms in the Fibonacci sequence whose values do not exceed four million, 
+
+	find the sum of the even-valued terms.'''
+	fibs = fibonacci(max_val)
+	even_sum = sum(list(filter(lambda x: x % 2 == 0, fibs)))
+	return even_sum
+
+
