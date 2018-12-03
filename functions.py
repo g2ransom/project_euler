@@ -1,3 +1,5 @@
+
+import math
 '''
 Solutions to Project Euler problems. You can call each function via command line by using
 
@@ -52,5 +54,61 @@ def p002(max_val):
 	fibs = fibonacci(max_val)
 	even_sum = sum(list(filter(lambda x: x % 2 == 0, fibs)))
 	return even_sum
+
+
+def gcd(a, b):
+	'''Finds the greatest common denominator using the Euclidean Algorithm'''
+	if b == 0:
+		return a;
+	elif a >= b:
+		return gcd(b, a % b)
+	else:
+		return gcd(b, a)
+
+
+def primes(n):
+	'''Sieve of Eratosthenes - Takes Too Much Memory'''
+	nums = {x: True for x in range(2, n+1)}
+	for i in range(2, int(round(math.sqrt(n)))):
+		if nums[i] == True:
+			for j in range(i**2 + i, n+1, i):
+				nums[j] = False
+	return [key for key,val in nums.iteritems() if val == True]
+
+
+def largest_prime_sieve(n):
+	'''Largest prime using Sieve of Eratosthenes'''
+	prime_list = primes(n)
+	return max(prime_list)
+
+
+def smallest_prime(n):
+	assert n >= 2
+	for i in range(2, int(round((math.sqrt(n))))+1):
+		if n % i == 0:
+			return i
+	return n
+
+
+def largest_prime(n):
+	'''What is the largest prime factor of the number 600851475143?
+
+	Generalized the solution for any number'''
+	while True:
+		p = smallest_prime(n)
+		if p < n:
+			n //= p
+		else:
+			return n
+
+
+
+def p003(n): return largest_prime(n)
+
+
+
+
+
+
 
 
