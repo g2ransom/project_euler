@@ -106,9 +106,20 @@ def largest_prime(n):
 def p003(n): return largest_prime(n)
 
 
+def check_palindrome(n):
+	if str(n) == str(n)[::-1]:
+		return True
+	else:
+		return False
 
 
-
-
-
+def p004(max_val):
+	'''Find the largest palindrome made from the product of two 3-digit numbers.'''
+	largest_pal = 0
+	for i in range(1, max_val):
+		for j in range(1, max_val):
+			product = i * j
+			if (check_palindrome(product) == True) and (product > largest_pal):
+				largest_pal = product
+	return largest_pal 
 
