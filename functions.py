@@ -1,5 +1,6 @@
 
 import math
+import numpy as np
 '''
 Solutions to Project Euler problems. You can call each function via command line by using
 
@@ -122,4 +123,32 @@ def p004(max_val):
 			if (check_palindrome(product) == True) and (product > largest_pal):
 				largest_pal = product
 	return largest_pal 
+
+
+# def p005(B):
+	'''Error when i = 1 and log 1 = 0'''
+	# primes_list = primes(B)
+	# print list(enumerate(primes_list,1))
+	# return np.prod([prime ** int(round(math.log(B, i))) for i, prime in enumerate(primes_list, 1)])
+
+
+def p005(B):
+	ans = 1
+	for i in range(1, B+1):
+		ans *= i // gcd(i, ans)
+	return ans
+
+
+def sum_of_squares(n):
+	return (n*(n+1) * (2*n + 1)) / 6
+
+def square_of_sums(n):
+	sum_n = (n*(n+1)) / 2
+	return sum_n ** 2
+
+def p006(n):
+	'''Find the difference between the sum of the squares of the first one hundred natural numbers 
+
+	and the square of the sum.'''
+	return square_of_sums(n) - sum_of_squares(n)
 
