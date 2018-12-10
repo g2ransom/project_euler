@@ -1,6 +1,8 @@
 
 import math
 import numpy as np
+import itertools
+from functools import reduce
 '''
 Solutions to Project Euler problems. You can call each function via command line by using
 
@@ -67,10 +69,10 @@ def gcd(a, b):
 		return gcd(b, a)
 
 
-def primes(n):
+def primes(m, n):
 	'''Sieve of Eratosthenes - Takes Too Much Memory'''
-	nums = {x: True for x in range(2, n+1)}
-	for i in range(2, int(round(math.sqrt(n)))):
+	nums = {x: True for x in range(m, n+1)}
+	for i in range(m, int(round(math.sqrt(n)))):
 		if nums[i] == True:
 			for j in range(i**2 + i, n+1, i):
 				nums[j] = False
@@ -133,6 +135,7 @@ def p004(max_val):
 
 
 def p005(B):
+	'''What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?'''
 	ans = 1
 	for i in range(1, B+1):
 		ans *= i // gcd(i, ans)
@@ -151,4 +154,60 @@ def p006(n):
 
 	and the square of the sum.'''
 	return square_of_sums(n) - sum_of_squares(n)
+
+
+def is_prime(x):
+	if x <= 1:
+		return False
+	elif x <= 3:
+		return True
+	elif x % 2 == 0:
+		return False
+	else:
+		for i in range(3, int(round(math.sqrt(x)) + 1), 2):
+			if x % i == 0:
+				return False
+		return True
+
+
+def prime_range(n):
+	low = int(round(n * math.log(n) + n * (math.log(math.log(n)) - 1)))
+	high = int(round(n * math.log(n) + n * (math.log(math.log(n)))))
+	prime_range = [x for x in range(low, high+1)]
+	ans = list(filter(lambda x: is_prime(x) == True, prime_range))
+	return ans
+
+
+def prime_count(n):
+	count = 0
+	for i in range(2, n+1):
+		if is_prime(i) == True:
+			count += 1
+	return count
+
+
+def p007(n):
+	'''What is the 10 001st prime number?'''
+	if n > 6:
+		primes_list = prime_range(n)
+		previous_primes = prime_count(primes_list[0])
+		return primes_list[n - previous_primes]
+	else:
+		first_six = {1: 2, 2: 3, 3: 5, 4: 7, 5: 11, 6: 13}
+		return first_six[n]
+
+
+def string_product(s): 
+	'''Takes a string of digits s and computes the product of each digit
+	ex: string_product('1234') = 24'''
+	return reduce(lambda x, y: int(x) * int(y), s)
+
+
+def p008(n):
+	'''Find the thirteen adjacent digits in the 1000-digit number that have the greatest product.'''
+	NUMBER = "7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450"
+	return max(string_product(NUMBER[i: i+n]) for i in range(len(NUMBER) - n + 1))
+
+
+
 
