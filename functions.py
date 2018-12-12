@@ -221,4 +221,10 @@ def p009(target_number):
 
 
 
+def p010(max_val):
+	'''Find the sum of all the primes below two million.'''
+	return sum([i for i in range(2, max_val) if is_prime(i) == True])
+
+
+
 
